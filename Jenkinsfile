@@ -7,6 +7,7 @@ pipeline {
     }
 */
     environment {
+        PATH = "/usr/share/maven/bin:$PATH"
         registry = "kubemma/vprofileapp"
         registryCredential = "dockerhub"
     }
