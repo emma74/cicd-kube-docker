@@ -11,9 +11,9 @@ pipeline {
         registryCredential = "dockerhub"
     }
 
-    stages{
+    stages {
 
-        stage('BUILD'){
+        stage('BUILD') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
@@ -25,19 +25,19 @@ pipeline {
             }
         }
 
-        stage('UNIT TEST'){
+        stage('UNIT TEST') {
             steps {
                 sh 'mvn test'
             }
         }
 
-        stage('INTEGRATION TEST'){
+        stage('INTEGRATION TEST') {
             steps {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
 
-        stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+        stage('CODE ANALYSIS WITH CHECKSTYLE') {
             steps {
                 sh 'mvn checkstyle:checkstyle'
             }
@@ -75,7 +75,7 @@ pipeline {
         stage('Build App Image') {
             steps {
                 script {
-                    dockerImage = docker.build.registry + ":V$BUILD_NUMBER"
+                    dockerImage = docker.build(registry + ":V$BUILD_NUMBER")
                 }
             }
         }
@@ -83,7 +83,7 @@ pipeline {
         stage('Upload Image') {
             steps {
                 script {
-                    docker.withRegistry{'', registryCredential} {
+                    docker.withRegistry('', registryCredential) {
                         dockerImage.push("V$BUILD_NUMBER")
                         dockerImage.push('latest')
                     }
@@ -98,12 +98,10 @@ pipeline {
         }
 
         stage('Kubernetes Deploy') {
-          agent {label 'KOPS'}
+            agent { label 'KOPS' }
             steps {
-              sh "helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appimage=${registry}:V${BUILD_NUMBER} --namespace prod"
+                sh "helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appimage=${registry}:V${BUILD_NUMBER} --namespace prod"
             }
         }     
     }
-
-
 }
