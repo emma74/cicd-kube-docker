@@ -1,6 +1,7 @@
 pipeline {
 
-    agent any
+    #agent any
+    agent { label 'KOPS' }
 /*
 	tools {
         maven "maven3"
