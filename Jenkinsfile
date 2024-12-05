@@ -7,7 +7,7 @@ pipeline {
         /* maven "maven3" */
         maven 'Maven 3.6.3'
     }
-*/
+
     environment {
         PATH = "/usr/share/maven/bin:$PATH"
         registry = "kubemma/vprofileapp"
