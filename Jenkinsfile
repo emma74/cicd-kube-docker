@@ -4,7 +4,8 @@ pipeline {
     agent { label 'KOPS' }
 /*
 	tools {
-        maven "maven3"
+        /* maven "maven3" */
+        maven 'Maven 3.6.3'
     }
 */
     environment {
