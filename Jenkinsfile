@@ -2,7 +2,7 @@ pipeline {
     agent { label 'KOPS' }
 
     tools {
-        maven 'Maven 3.6.3'  
+        maven 'MAVEN3'  
     }
 
     environment {
