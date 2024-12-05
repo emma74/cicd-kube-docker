@@ -1,15 +1,12 @@
 pipeline {
-
-    /*agent any */
     agent { label 'KOPS' }
-/*
-	tools {
-        /* maven "maven3" */
-        maven 'Maven 3.6.3'
+
+    tools {
+        maven 'Maven 3.6.3'  
     }
 
     environment {
-        PATH = "/usr/share/maven/bin:$PATH"
+        PATH = "/usr/local/maven/bin:$PATH"
         registry = "kubemma/vprofileapp"
         registryCredential = "dockerhub"
     }
@@ -52,11 +49,9 @@ pipeline {
         }
 
         stage('CODE ANALYSIS with SONARQUBE') {
-
             environment {
                 scannerHome = tool 'mysonarscanner4'
             }
-
             steps {
                 withSonarQubeEnv('sonar-pro') {
                     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
