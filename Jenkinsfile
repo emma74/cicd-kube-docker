@@ -74,6 +74,7 @@ pipeline {
             steps {
                 sh 'docker --version'
                 sh 'whoami'
+                sh 'docker info'
                 sh 'id'
             }
         }
@@ -81,11 +82,9 @@ pipeline {
 
         stage('Build App Image') {
             steps {
-                sh '''
-                   docker build -t kubemma/vprofileapp:V$BUILD_NUMBER -f /home/ubuntu/cicd-kube-docker/Dockerfile /home/ubuntu/cicd-kube-docker
-                '''
                 script {
-                    dockerImage = docker.build(registry + ":V$BUILD_NUMBER")
+                    //dockerImage = docker.build(registry + ":V$BUILD_NUMBER")
+                    docker build -t kubemma/vprofileapp:V$BUILD_NUMBER -f /home/ubuntu/cicd-kube-docker/Dockerfile /home/ubuntu/cicd-kube-docker
                 }
             }
         }
