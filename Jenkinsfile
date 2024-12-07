@@ -73,6 +73,8 @@ pipeline {
         stage('Validate Docker') {
             steps {
                 sh 'docker --version'
+                sh 'whoami'
+                sh 'id'
             }
         }
          
