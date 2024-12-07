@@ -70,6 +70,13 @@ pipeline {
             }
         }
 
+        stage('Validate Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+         
+
         stage('Build App Image') {
             steps {
                 script {
