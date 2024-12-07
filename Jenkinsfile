@@ -73,8 +73,9 @@ pipeline {
         stage('Validate Docker') {
             steps {
                script {
-                    sh 'sudo docker --version'
-                    sh 'sudo docker info'
+                    sh 'newgrp docker'
+                    sh 'docker --version'
+                    sh 'docker info'
                     sh 'id'
                     sh 'ls -la /home/ubuntu/cicd-kube-docker'
                     sh 'ls -la /home/ubuntu/cicd-kube-docker/Dockerfile'
