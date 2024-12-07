@@ -73,9 +73,10 @@ pipeline {
         stage('Validate Docker') {
             steps {
                 sh 'docker --version'
-                sh 'whoami'
                 sh 'docker info'
                 sh 'id'
+                sh 'ls -la /home/ubuntu/cicd-kube-docker'
+                sh 'ls -la /home/ubuntu/cicd-kube-docker/Dockerfile'
             }
         }
          
@@ -84,7 +85,8 @@ pipeline {
             steps {
                 script {
                     //dockerImage = docker.build(registry + ":V$BUILD_NUMBER")
-                    docker build -t kubemma/vprofileapp:V$BUILD_NUMBER -f /home/ubuntu/cicd-kube-docker/Dockerfile /home/ubuntu/cicd-kube-docker
+                    //dockerImage = docker build -t kubemma/vprofileapp:V$BUILD_NUMBER -f /home/ubuntu/cicd-kube-docker/Dockerfile /home/ubuntu/cicd-kube-docker
+                     dockerImage = docker.build("${registry}:V${BUILD_NUMBER}", "-f /home/ubuntu/cicd-kube-docker/Dockerfile /home/ubuntu/cicd-kube-docker")
                 }
             }
         }
